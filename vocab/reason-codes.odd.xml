@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  File: vocab/reason-codes.odd.xml
+  Purpose: Project‑level controlled vocabulary (valList) for adjudication codes.
+
+  Wiring instructions (pick ONE of these common patterns):
+  ---------------------------------------------------------------------------
+  A) Constrain @ana on your adjudication element
+     - If your adjudication records are stored as <annotation> (or another element),
+       you can constrain its @ana attribute to a semi‑closed list of tokens.
+     - Pros: simple; aligns with the “codes live in @ana” convention used in the handout.
+     - Cons: @ana is widely used for analytic pointers; you may prefer a dedicated attribute.
+
+  B) Add a dedicated attribute (recommended): @adjudication (or @codes)
+     - Create a custom attribute on the adjudication element and constrain THAT attribute
+       with this valList. Keep @ana free for other analytic pointers if needed.
+     - Pros: avoids overloading @ana; clearer semantics.
+
+  In either case:
+  - Use valList type="semi" so you can add new tokens later with instructor/editor governance.
+  - Keep decision codes and reason codes in the same attribute (space‑separated) or split
+    across two attributes (e.g., @decision and @reason). The simplest implementation is
+    a single attribute holding multiple tokens.
+-->
+
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Pragmatic Glass Box: Adjudication Reason Codes (ODD snippet)</title>
+      </titleStmt>
+      <publicationStmt>
+        <p>Project‑level ODD snippet for constraining adjudication codes.</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Derived from vocab/reason-codes.md</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+
+  <text>
+    <body>
+      <!-- ODD CONTENT -->
+      <schemaSpec ident="pragmatic-glass-box-codes" xml:lang="en">
+
+        <!--
+          OPTION B (recommended): Add a dedicated attribute to tei:annotation for adjudication codes.
+          This avoids overloading @ana. Your adjudication records can then use:
+              adjudication="#reject #unitMismatch"
+          while @ana remains available for other analytic pointers if desired.
+        -->
+        <elementSpec ident="annotation" mode="change">
+          <attList>
+            <attDef ident="adjudication" mode="add" usage="opt">
+              <desc>
+                Project‑level adjudication codes for LLM suggestions: one decision token plus one or more reason tokens.
+                Tokens are space‑separated (e.g., "#reject #unitMismatch").
+              </desc>
+              <datatype>
+                <dataRef key="teidata.word"/>
+              </datatype>
+
+              <!-- semi = bounded but extensible under instructor/editor governance -->
+              <valList type="semi">
+                <!-- Decisions -->
+                <valItem ident="#accept"><desc>Decision: suggestion adopted.</desc></valItem>
+                <valItem ident="#reject"><desc>Decision: suggestion refused.</desc></valItem>
+                <valItem ident="#modify"><desc>Decision: suggestion partially adopted or corrected.</desc></valItem>
+                <valItem ident="#defer"><desc>Decision: needs instructor review or additional evidence.</desc></valItem>
+
+                <!-- Default meta -->
+                <valItem ident="#ok"><desc>Routine acceptance; no notable issue.</desc></valItem>
+
+                <!-- Structural / mapping -->
+                <valItem ident="#unitMismatch">
+                  <desc>Units are incommensurate (e.g., contracted vs expanded; token vs phrase).</desc>
+                </valItem>
+                <valItem ident="#manyToMany">
+                  <desc>Mapping is not 1:1; requires one‑to‑many/many‑to‑one/many‑to‑many.</desc>
+                </valItem>
+                <valItem ident="#boundaryAmbiguity">
+                  <desc>Multiple plausible segmentations exist; ambiguity is real.</desc>
+                </valItem>
+                <valItem ident="#formAmbiguity">
+                  <desc>Form admits multiple valid analyses; model fails to note ambiguity.</desc>
+                </valItem>
+
+                <!-- Evidence / support -->
+                <valItem ident="#hallucination">
+                  <desc>Introduces content/structure ungrounded in the text.</desc>
+                </valItem>
+                <valItem ident="#contradictsWitness">
+                  <desc>Conflicts with witness/manuscript evidence.</desc>
+                </valItem>
+                <valItem ident="#unsupportedClaim">
+                  <desc>Lacks support in witness evidence and/or project policy.</desc>
+                </valItem>
+
+                <!-- Overconfidence / flattening -->
+                <valItem ident="#overRegularization">
+                  <desc>Flattens legitimate variation/uncertainty into a single “clean” form.</desc>
+                </valItem>
+                <valItem ident="#policyConflict">
+                  <desc>Conflicts with project editorial policy or encoding guidelines.</desc>
+                </valItem>
+
+                <!-- Optional linguistic extension -->
+                <valItem ident="#lemmaError"><desc>Optional: incorrect lemma/base form.</desc></valItem>
+                <valItem ident="#morphMismatch"><desc>Optional: incorrect morphological analysis.</desc></valItem>
+                <valItem ident="#posError"><desc>Optional: incorrect part of speech.</desc></valItem>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>

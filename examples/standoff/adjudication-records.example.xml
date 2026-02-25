@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Example of a human adjudication record stored in stand‑off. It evaluates an LLM
+  suggestion, applies decision and reason codes, and provides a corrected mapping.
+-->
+<annotations xmlns="http://www.tei-c.org/ns/1.0">
+  <annotation xml:id="adj_01" resp="#student_01"
+              target="#llm_sugg_01" adjudication="#reject #unitMismatch"
+              source="#prompt.align.v1">
+    <!-- Rationale required because we rejected a wrong alignment -->
+    <note>Contraction requires a one-to-many mapping.</note>
+    <linkGrp type="alignment_corrected">
+      <!-- Corrected mapping: the contracted form aligns to both parts of the expansion -->
+      <link target="#w_dont #w_do #w_not"/>
+    </linkGrp>
+  </annotation>
+</annotations>

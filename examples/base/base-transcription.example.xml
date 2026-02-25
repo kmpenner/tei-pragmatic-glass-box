@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Minimal base transcription example for the Pragmatic Glass Box workflow.
+  The base file contains only the transcription and stable xml:id anchors.
+-->
+<text xml:id="base">
+  <body>
+    <w xml:id="w_dont">don't</w>
+    <w xml:id="w_do">do</w>
+    <w xml:id="w_not">not</w>
+  </body>
+</text>

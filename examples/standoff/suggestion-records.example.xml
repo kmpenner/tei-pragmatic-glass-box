@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Example of an LLM suggestion record stored in stand‑off. It proposes an alignment
+  between a contracted form and part of its expansion. The claim cites a prompt profile.
+-->
+<annotations xmlns="http://www.tei-c.org/ns/1.0">
+  <annotation xml:id="llm_sugg_01" source="#prompt.align.v1">
+    <desc>LLM suggested a 1‑to‑1 alignment between the contracted form and the first part of its expansion.</desc>
+    <linkGrp type="alignment_suggestion">
+      <!-- The model proposed linking #w_dont to #w_do only, leaving #w_not unmatched -->
+      <link target="#w_dont #w_do"/>
+    </linkGrp>
+  </annotation>
+</annotations>
